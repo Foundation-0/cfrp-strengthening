@@ -15,7 +15,8 @@ Foundation-0/.github, sections A to D.
   carbon-fiber, cfrp, concrete, aci-440.
 - Branch protection on main: pull request required, 1 approval, stale
   reviews dismissed, conversations resolved, admins included, no force
-  pushes, no deletions. Set 2026-10-25.
+  pushes, no deletions. The CI verify jobs for Python 3.11 and 3.12 are
+  required status checks. Set 2026-10-25.
 - Track 1 checker, src/flexure440.py, locked by hash. Input and expected
   files under tracks/track-1/, tests under tests/.
 - First result recorded: results/track-1-flexure/, with PROOF.md,
