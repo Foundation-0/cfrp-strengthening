@@ -23,12 +23,14 @@ Beam and concrete:
 - Existing strain on the soffit at FRP installation, ebi = 0.0013.
 - Service moment Ms = 340 k-ft, split in the example as 215 k-ft dead and
   125 k-ft live.
+- Span L = 25 ft. Loads: dead wDL = 2.75 k/ft, existing live 1.00 k/ft,
+  new live wLL = 1.60 k/ft.
 
 Steel:
 
 - fy = 60 ksi. Es = 29,000 ksi.
-- Steel ratio printed as rs = 0.0119, which gives As = 4.00 sq in over
-  b times d. The bar layout behind that area is an open obligation below.
+- Bars: 4 No. 9, As = 4.00 sq in. Steel ratio rs = 0.0119.
+- Minimum steel printed as As,min = 1.12 sq in, pass.
 
 FRP system, one ply of fabric:
 
@@ -43,6 +45,10 @@ FRP system, one ply of fabric:
 KNOWN, from the example. A checker earns VERIFIED only by matching these
 from the inputs alone.
 
+- Existing strength of the beam without FRP: phi Mn = 387 k-ft.
+- Strengthening limit, in the form the example uses (ACI 562-16,
+  Section 5.5.2): the existing strength must cover the limit moment
+  (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
 - Debonding strain efd = 0.0049. Limit 0.9 times efu = 0.0069. Debonding
   controls the design strain.
 - First pass with neutral axis c = 6 in: effective FRP strain efe is capped
@@ -57,22 +63,52 @@ from the inputs alone.
 
 - Extract the final converged neutral axis depth, the nominal moment Mn,
   and the design moment phi Mn printed in the example, from the publisher
-  copy. Record the page for each number.
-- Extract the demand the example designs for, and its strengthening limit
-  check, with pages.
-- Confirm the steel bar layout behind As = 4.00 sq in.
-- Confirm the exposure behind CE = 0.85.
+  copy, and confirm the checker outputs below against them.
+- Confirm the exposure statement behind CE = 0.85 on the publisher copy.
 - Page-level citations for the inputs and results above, checked against
   the publisher copy. The values above were recorded from the example
-  text. Any value the publisher copy does not confirm gets corrected here,
-  in the open, before the checker pull request opens.
+  text. Any value the publisher copy does not confirm gets corrected
+  here, in the open.
 
 ## Checker
 
-None yet. Checker hash: not recorded, because no checker exists.
-The checker pull request and the first result pull request are separate,
-per CONTRIBUTING.md.
+src/flexure440.py, standard library only.
+sha256: 77583629134777eb507a39cc6cb47b8297d1b5d3336f2bbea66345179a81d872
+
+Run it:
+
+```
+python3 src/flexure440.py tracks/track-1/input.json
+make verify
+```
+
+Checker output on the example inputs, 2026-10-25. Four tests pass
+(tests/test_track1.py). The test file compares ten checker values with
+the printed values in expected.json, and every one matches inside the
+tolerance that covers the example's own rounding:
+
+- ffu = 108.8 ksi. efd = 0.0049. ffe = 69.9 ksi, printed as 70 ksi.
+- Existing phi Mn = 386.6 k-ft, printed as 387 k-ft.
+- Strengthening limit demand = 330.1 k-ft, printed as 330 k-ft.
+- As,min = 1.12 sq in. k = 0.3708, printed as 0.3709. kd = 8.90 in.
+- Service fs,s = 46.1 ksi. Service ff,s = 8.6 ksi.
+
+Checker outputs that are not printed in the parts of the example read so
+far, so they carry no VERIFIED label yet:
+
+- Converged neutral axis c = 7.49 in. Mode: FRP debonding controls.
+- Strengthened Mn = 535.3 k-ft. phi = 0.90, so phi Mn = 481.7 k-ft.
+- Design demand from the printed loads, Mu = (1.2 wDL + 1.6 wLL) L^2 / 8
+  = 457.8 k-ft. phi Mn covers Mu, pass.
+
+The first result pull request records these as a result only after the
+open obligation on the printed phi Mn is closed or the result is restated
+to stand on the matched values alone.
 
 ## Failed attempts
 
-None yet.
+- A first service stress run with a plain transformed section gave
+  fs,s = 41.8 ksi, not the printed 46.1 ksi. The plain section ignores
+  the initial soffit strain on the FRP force. The example's closed form
+  carries that strain, and the checker now uses it. Recorded here so the
+  next reader does not repeat it.
