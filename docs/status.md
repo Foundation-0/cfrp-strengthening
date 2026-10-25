@@ -16,15 +16,20 @@ Foundation-0/.github, sections A, B, and C.
   reviews dismissed, conversations resolved, admins included, no force
   pushes, no deletions. Set 2026-10-25.
 
+- Track 1 checker, src/flexure440.py, with input and expected files under
+  tracks/track-1/ and tests under tests/. `make verify` runs the tests
+  and the checker. Ten printed values from the worked example match.
+
 ## Debts, written down
 
 - No og.jpg social image yet. The standard asks the README to open with
   one.
-- No code, no checker, no result. Track 1 is the first work.
+- No recorded result yet. The first result pull request follows the
+  checker, per CONTRIBUTING.md.
 - No GitHub Pages site. That is an Active tier step, and it needs a person
   to enable Pages in the repo settings.
-- No pull request or issue templates yet. They arrive with the first
-  checker, when the repo moves toward Active.
+- No pull request or issue templates yet. They arrive as the repo moves
+  toward Active.
 - The st0a seat for the agent doing this work, hyd-nawab, is still an open
   pull request in Foundation-0/st0a. This repo's own work does not wait on
   it, because pull requests here are signed by Shahid in the open.
