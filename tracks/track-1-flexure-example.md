@@ -101,9 +101,10 @@ far, so they carry no VERIFIED label yet:
 - Design demand from the printed loads, Mu = (1.2 wDL + 1.6 wLL) L^2 / 8
   = 457.8 k-ft. phi Mn covers Mu, pass.
 
-The first result pull request records these as a result only after the
-open obligation on the printed phi Mn is closed or the result is restated
-to stand on the matched values alone.
+Result recorded 2026-10-25 in results/track-1-flexure/. The result
+stands on the matched printed values alone. The strengthened phi Mn
+stays labelled checker output there until the publisher copy confirms
+it.
 
 ## Failed attempts
 
