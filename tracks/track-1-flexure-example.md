@@ -46,9 +46,12 @@ KNOWN, from the example. A checker earns VERIFIED only by matching these
 from the inputs alone.
 
 - Existing strength of the beam without FRP: phi Mn = 387 k-ft.
-- Strengthening limit, in the form the example uses (ACI 562-16,
-  Section 5.5.2): the existing strength must cover the limit moment
-  (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
+- Strengthening limit: the existing strength must cover the limit
+  moment (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
+  The example text cites ACI 562-16, Section 5.5.2 for this check, but
+  the combination it computes, 1.1 dead + 0.75 live, is ACI 440.2R-17
+  Eq. (9.2). The 562 combination (1.2 dead + 0.5 live) gives 320.3 k-ft,
+  not the printed 330. The result cites Eq. (9.2), as computed.
 - Debonding strain efd = 0.0049. Limit 0.9 times efu = 0.0069. Debonding
   controls the design strain.
 - First pass with neutral axis c = 6 in: effective FRP strain efe is capped
@@ -87,7 +90,7 @@ python3 src/flexure440.py tracks/track-1/input.json
 make verify
 ```
 
-Checker output on the example inputs, 2026-10-25. Four tests pass
+Checker output on the example inputs, 2026-10-25. Six tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
 tolerance in expected.json. Each tolerance is half the precision the
