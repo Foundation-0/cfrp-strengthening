@@ -1,7 +1,12 @@
 """Track 1 checker tests.
 
 The example test compares the checker against numbers printed in the
-Simpson Strong-Tie worked example (tracks/track-1/expected.json).
+Simpson Strong-Tie worked example (tracks/track-1/expected.json). The
+mapping from each printed value to a checker output, and its tolerance,
+live in that file, so these tests and the result replay in
+results/track-1-flexure/verify.py check the same set of values.
+The cap test confirms the debonding strain cap is really applied, on a
+synthetic input whose uncapped strain runs far past the cap.
 The mode test is an internal sanity check only. It uses a much heavier
 steel area on the same beam to confirm the solver also runs the concrete
 crushing mode with a small force balance error. It is not a published
@@ -27,29 +32,24 @@ def load(name):
         return json.load(fh)
 
 
+def resolve(out, dotted):
+    node = out
+    for part in dotted.split("."):
+        node = node[part]
+    return node
+
+
 class ExampleMatch(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.out = flexure440.run(load("input.json"))
         cls.exp = load("expected.json")["values"]
 
-    def check(self, key, got):
-        want = self.exp[key]
-        self.assertAlmostEqual(got, want["printed"], delta=want["tol"],
-                               msg=f"{key}: checker {got} vs printed {want['printed']}")
-
     def test_printed_values(self):
-        out = self.out
-        self.check("ffu_ksi", out["design_material"]["ffu_ksi"])
-        self.check("efd", out["efd"])
-        self.check("ffe_ksi", out["section"]["ffe_ksi"])
-        self.check("phiMn_existing_kipft", out["existing"]["phiMn_kipft"])
-        self.check("limit_demand_kipft", out["strengthening_limit"]["limit_demand_kipft"])
-        self.check("As_min_in2", out["As_min_in2"])
-        self.check("k", out["service"]["k"])
-        self.check("kd_in", out["service"]["kd_in"])
-        self.check("fs_service_ksi", out["service"]["fs_service_ksi"])
-        self.check("ff_service_ksi", out["service"]["ff_service_ksi"])
+        for key, spec in self.exp.items():
+            got = resolve(self.out, spec["field"])
+            self.assertAlmostEqual(got, spec["printed"], delta=spec["tol"],
+                                   msg=f"{key}: checker {got} vs printed {spec['printed']}")
 
     def test_all_checks_pass(self):
         for name, _value, _limit, ok in self.out["checks"]:
@@ -57,6 +57,24 @@ class ExampleMatch(unittest.TestCase):
 
     def test_force_balance(self):
         self.assertAlmostEqual(self.out["section"]["balance_kips"], 0.0, delta=0.05)
+
+
+class DebondingCap(unittest.TestCase):
+    def test_cap_applies_when_formula_runs_past_it(self):
+        inp = load("input.json")
+        inp["frp"]["tf_in"] = 0.01
+        inp["frp"]["Ef_ksi"] = 5000.0
+        mat = flexure440.design_material(inp)
+        efd, raw = flexure440.debonding_strain(inp, mat)
+        self.assertGreater(raw, 0.9 * mat["efu"])
+        self.assertAlmostEqual(efd, 0.9 * mat["efu"], places=12)
+
+    def test_example_stays_under_cap(self):
+        inp = load("input.json")
+        mat = flexure440.design_material(inp)
+        efd, raw = flexure440.debonding_strain(inp, mat)
+        self.assertLess(raw, 0.9 * mat["efu"])
+        self.assertAlmostEqual(efd, raw, places=12)
 
 
 class CrushingModeSanity(unittest.TestCase):

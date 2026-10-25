@@ -46,9 +46,12 @@ KNOWN, from the example. A checker earns VERIFIED only by matching these
 from the inputs alone.
 
 - Existing strength of the beam without FRP: phi Mn = 387 k-ft.
-- Strengthening limit, in the form the example uses (ACI 562-16,
-  Section 5.5.2): the existing strength must cover the limit moment
-  (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
+- Strengthening limit: the existing strength must cover the limit
+  moment (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
+  The example text cites ACI 562-16, Section 5.5.2 for this check, but
+  the combination it computes, 1.1 dead + 0.75 live, is ACI 440.2R-17
+  Eq. (9.2). The 562 combination (1.2 dead + 0.5 live) gives 320.3 k-ft,
+  not the printed 330. The result cites Eq. (9.2), as computed.
 - Debonding strain efd = 0.0049. Limit 0.9 times efu = 0.0069. Debonding
   controls the design strain.
 - First pass with neutral axis c = 6 in: effective FRP strain efe is capped
@@ -65,6 +68,11 @@ from the inputs alone.
   and the design moment phi Mn printed in the example, from the publisher
   copy, and confirm the checker outputs below against them.
 - Confirm the exposure statement behind CE = 0.85 on the publisher copy.
+- Checker wording, for a future checker pull request: the checker's
+  printed output lists the debonding strain beside its own cap as a pass
+  or fail check. It is a definition with a cap, not a check. The result
+  replay and the unit tests treat it that way already. The checker is
+  hash locked, so this fix does not ride in a result pull request.
 - Page-level citations for the inputs and results above, checked against
   the publisher copy. The values above were recorded from the example
   text. Any value the publisher copy does not confirm gets corrected
@@ -82,10 +90,12 @@ python3 src/flexure440.py tracks/track-1/input.json
 make verify
 ```
 
-Checker output on the example inputs, 2026-10-25. Four tests pass
+Checker output on the example inputs, 2026-10-25. Six tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
-tolerance that covers the example's own rounding:
+tolerance in expected.json. Each tolerance is half the precision the
+example prints, except k, whose wider allowance is explained in that
+file:
 
 - ffu = 108.8 ksi. efd = 0.0049. ffe = 69.9 ksi, printed as 70 ksi.
 - Existing phi Mn = 386.6 k-ft, printed as 387 k-ft.
@@ -101,9 +111,10 @@ far, so they carry no VERIFIED label yet:
 - Design demand from the printed loads, Mu = (1.2 wDL + 1.6 wLL) L^2 / 8
   = 457.8 k-ft. phi Mn covers Mu, pass.
 
-The first result pull request records these as a result only after the
-open obligation on the printed phi Mn is closed or the result is restated
-to stand on the matched values alone.
+Result recorded 2026-10-25 in results/track-1-flexure/. The result
+stands on the matched printed values alone. The strengthened phi Mn
+stays labelled checker output there until the publisher copy confirms
+it.
 
 ## Failed attempts
 

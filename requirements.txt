@@ -1,0 +1,2 @@
+# No dependencies. Every tool in this repo runs on the Python standard
+# library alone, so there is nothing to pin.

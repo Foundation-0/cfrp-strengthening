@@ -1,0 +1,32 @@
+# A green run proves: the unit tests pass, and the Track 1 certificate
+# regenerates from its input file with the locked checker and matches
+# the committed copy byte for byte.
+# A green run does not prove: the ACI method is correct, the input file
+# matches the publisher copy of the example, or any real beam is safe.
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run all verifiers
+        env:
+          OPENBLAS_NUM_THREADS: "1"
+          OMP_NUM_THREADS: "1"
+        run: make verify
+      - name: Certificates regenerate clean
+        run: |
+          make certificates
+          git diff --exit-code -- results certificates commitment

@@ -1,0 +1,104 @@
+{
+  "checker": {
+    "path": "src/flexure440.py",
+    "sha256": "77583629134777eb507a39cc6cb47b8297d1b5d3336f2bbea66345179a81d872"
+  },
+  "checks_pass": {
+    "Debonding cap applied, efd = min(formula, 0.9 efu)": true,
+    "Design strength, phiMn >= Mu": true,
+    "Minimum steel, As >= As,min": true,
+    "Service FRP stress, ff,s <= 0.55 ffu": true,
+    "Service steel stress, fs,s <= 0.80 fy": true,
+    "Strengthening limit, phiMn existing >= 1.1DL + 0.75LL moment": true
+  },
+  "date": "2026-10-25",
+  "input": {
+    "path": "tracks/track-1/input.json",
+    "sha256": "b13b30e25b15065857ff9f12d9b7b93cdf962cbe216afa9aaf5772e75c83e144"
+  },
+  "printed_match": {
+    "As_min_in2": {
+      "checker": 1.12,
+      "match": true,
+      "printed": 1.12,
+      "tol": 0.005
+    },
+    "efd": {
+      "checker": 0.004925,
+      "match": true,
+      "printed": 0.0049,
+      "tol": 5e-05
+    },
+    "ff_service_ksi": {
+      "checker": 8.615777,
+      "match": true,
+      "printed": 8.6,
+      "tol": 0.05
+    },
+    "ffe_ksi": {
+      "checker": 69.937043,
+      "match": true,
+      "printed": 70.0,
+      "tol": 0.5
+    },
+    "ffu_ksi": {
+      "checker": 108.8,
+      "match": true,
+      "printed": 108.8,
+      "tol": 0.05
+    },
+    "fs_service_ksi": {
+      "checker": 46.131044,
+      "match": true,
+      "printed": 46.1,
+      "tol": 0.05
+    },
+    "k": {
+      "checker": 0.370796,
+      "match": true,
+      "printed": 0.3709,
+      "tol": 0.001
+    },
+    "kd_in": {
+      "checker": 8.899093,
+      "match": true,
+      "printed": 8.9,
+      "tol": 0.005
+    },
+    "limit_demand_kipft": {
+      "checker": 330.078125,
+      "match": true,
+      "printed": 330.0,
+      "tol": 0.5
+    },
+    "phiMn_existing_kipft": {
+      "checker": 386.621849,
+      "match": true,
+      "printed": 387.0,
+      "tol": 0.5
+    }
+  },
+  "result": "track-1-flexure",
+  "source": "Simpson Strong-Tie, Composite Strengthening Systems (CSS), Flexural Strengthening Design Example, 2020. Values as printed in the example. See tracks/track-1-flexure-example.md and NOTICE.",
+  "values": {
+    "As_min_in2": 1.12,
+    "Mu_kipft": 457.8,
+    "design_ffu_ksi": 108.8,
+    "efd": 0.0049,
+    "existing_phiMn_kipft": 386.6,
+    "limit_demand_kipft": 330.1,
+    "phiMn_kipft": 481.7,
+    "section_Mn_kipft": 535.3,
+    "section_c_in": 7.49,
+    "section_ec": 0.0024,
+    "section_efe": 0.0049,
+    "section_es": 0.0053,
+    "section_ffe_ksi": 69.9,
+    "section_fs_ksi": 60.0,
+    "section_mode": "FRP debonding controls",
+    "service_ff_ksi": 8.6,
+    "service_fs_ksi": 46.1,
+    "service_k": 0.3708,
+    "service_kd_in": 8.9
+  }
+}
