@@ -32,7 +32,8 @@ track file.
 Each check compares one computed value with one code limit, for the
 input beam only. The sources differ by check, and the result's PROOF.md
 names them: three from ACI 440.2R-17, minimum steel from ACI 318, the
-strengthening limit from ACI 562-16 in the form the example uses. A pass
+strengthening limit from ACI 440.2R-17 Eq. (9.2), as the example
+computes it. A pass
 means the arithmetic, as the checker implements it, is satisfied for
 those inputs. It is not a design approval, not a field instruction, and
 not a substitute for the engineer of record.
@@ -57,3 +58,8 @@ in the track file.
   file itself. Every other value matches inside its half precision.
 - The strengthened design strength, 481.7 kip-ft, is checker output. No
   printed value for it has been read yet. See the result's PROOF.md.
+- Concrete compressive stress under service loads is not checked, by
+  the checker or by the example's printed checks. A hand calculation
+  from the checker's cracked section gives about 3.38 ksi, above the
+  Section 10.2.8 limit. The gap is disclosed in the result's Scope, and
+  the check itself is issue #4 item 1, for a checker pull request.
