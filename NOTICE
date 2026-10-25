@@ -1,0 +1,45 @@
+# Notice: third-party sources this repo builds on
+
+This file lists every outside source the work depends on, with what we use
+and what we do not take.
+
+## ACI 440.2R-17
+
+Guide for the Design and Construction of Externally Bonded FRP Systems for
+Strengthening Concrete Structures. American Concrete Institute, Committee 440,
+2017.
+
+- What we use: the design method, its equations, and its section numbers.
+- What we do not take: the text, tables, and figures of the guide. The guide
+  is copyrighted by ACI and is not freely reusable. Buy or license it from
+  ACI for the full method.
+- Numbers from the guide, such as a material factor, are facts of the method
+  and are cited to their section.
+
+## ACI 318
+
+Building Code Requirements for Structural Concrete. American Concrete
+Institute.
+
+- What we use: the concrete stress block factors and steel rules that
+  ACI 440.2R-17 points to.
+- Copyrighted by ACI. Cited, not copied.
+
+## Simpson Strong-Tie worked example
+
+Flexural Strengthening Design Example, Composite Strengthening Systems (CSS),
+Simpson Strong-Tie, 2020. A five-page worked example that follows
+ACI 440.2R-17 step by step.
+
+- What we use: its input values and its printed results, as the test set for
+  Track 1. Printed numbers are recorded in tracks/track-1-flexure-example.md
+  with the page they came from.
+- What we do not take: its text, layout, and figures. Copyright stays with
+  Simpson Strong-Tie.
+- Flag: do not assume this document is freely reusable. Cite it, link to the
+  publisher, and record only the numbers a checker needs.
+
+## Rule for new sources
+
+Add every new dataset, file, or example here before code that uses it lands.
+Give the source, the licence if one is stated, and what must be preserved.
