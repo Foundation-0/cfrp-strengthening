@@ -8,7 +8,7 @@ Each track is one worked example, one checker, and one set of checks.
 
 Later tracks, in the order Shahid set:
 
-- Track 2: the strengthening limit and fire case in full, ACI 440.2R-17 Section 9.2 and Chapter 9. Track 1 already carries the worked example's own limit check, which follows ACI 562-16 Section 5.5.2. Track 2 is the guide's fuller treatment, not a repeat of that check.
+- Track 2: the fire case, and the rest of ACI 440.2R-17 Section 9.2 beyond the Eq. (9.2) strengthening limit check that Track 1 already carries, plus Chapter 9 in full.
 - Track 3: shear strengthening with fabric wraps.
 - Track 4: a masonry wall case, once a published worked example is found.
 
