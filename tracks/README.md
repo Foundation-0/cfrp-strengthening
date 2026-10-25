@@ -4,7 +4,7 @@ Each track is one worked example, one checker, and one set of checks.
 
 | Track | What it covers | Status |
 |---|---|---|
-| [Track 1](track-1-flexure-example.md) | Flexure checks for one concrete beam with carbon fiber fabric, ACI 440.2R-17 Chapter 10 | Open. Test set partly recorded. No checker yet. |
+| [Track 1](track-1-flexure-example.md) | Flexure checks for one concrete beam with carbon fiber fabric, ACI 440.2R-17 Chapter 10 | Checker built. Ten printed values matched in tests. First result not yet recorded. |
 
 Later tracks, in the order Shahid set:
 

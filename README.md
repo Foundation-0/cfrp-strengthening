@@ -2,7 +2,7 @@
 
 Carbon fiber fabric can make a weak concrete beam carry more load. The design checks for that work sit in ACI 440.2R, the guide for externally bonded FRP strengthening. This project turns those checks into small public calculations that anyone can re-run, step by step, from the inputs alone.
 
-Status: Seed. The scaffold is in place. No checker and no result exist yet.
+Status: Seed, moving toward Active. The Track 1 checker is built and its tests match the worked example. No result is recorded yet.
 
 ## What this is
 
