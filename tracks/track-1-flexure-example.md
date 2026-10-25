@@ -65,6 +65,11 @@ from the inputs alone.
   and the design moment phi Mn printed in the example, from the publisher
   copy, and confirm the checker outputs below against them.
 - Confirm the exposure statement behind CE = 0.85 on the publisher copy.
+- Checker wording, for a future checker pull request: the checker's
+  printed output lists the debonding strain beside its own cap as a pass
+  or fail check. It is a definition with a cap, not a check. The result
+  replay and the unit tests treat it that way already. The checker is
+  hash locked, so this fix does not ride in a result pull request.
 - Page-level citations for the inputs and results above, checked against
   the publisher copy. The values above were recorded from the example
   text. Any value the publisher copy does not confirm gets corrected
@@ -85,7 +90,9 @@ make verify
 Checker output on the example inputs, 2026-10-25. Four tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
-tolerance that covers the example's own rounding:
+tolerance in expected.json. Each tolerance is half the precision the
+example prints, except k, whose wider allowance is explained in that
+file:
 
 - ffu = 108.8 ksi. efd = 0.0049. ffe = 69.9 ksi, printed as 70 ksi.
 - Existing phi Mn = 386.6 k-ft, printed as 387 k-ft.
