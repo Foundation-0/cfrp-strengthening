@@ -4,21 +4,35 @@
 Run from anywhere:
     python3 results/track-1-flexure/verify.py
         Recompute every number from tracks/track-1/input.json with the
-        locked checker, compare with certificate.json in this folder,
-        and check the ten printed values from the worked example.
+        checker, compare with certificate.json in this folder, and check
+        the ten printed values from the worked example.
     python3 results/track-1-flexure/verify.py --write
-        Regenerate certificate.json. Do this only as a deliberate change,
-        and commit the new certificate with its reason.
+        Regenerate certificate.json, but only if the result passes.
+        A failing result is never certified: the run prints the failures
+        and exits non-zero without writing.
+
+Checker lock: the checker hash recorded in
+tracks/track-1-flexure-example.md is the lock. If src/flexure440.py
+differs from that hash by one byte, both modes fail. A checker change
+must land in its own pull request, which updates the lock there, before
+any result can be certified against it.
+
+The printed-value match compares unrounded checker output with the
+printed values, the same comparison the unit tests make. Rounded values
+in the certificate are for reading, not for matching.
 
 A pass proves the numbers in the certificate replay from the input file
-with this checker. It does not prove the ACI method is right, and it does
-not prove any real beam is safe. See PROOF.md for what is claimed.
+with the locked checker. It does not prove the ACI method is right, and
+it does not prove any real beam is safe. See PROOF.md for what is
+claimed.
 """
 
 import hashlib
 import json
 import os
+import re
 import sys
+from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -30,19 +44,7 @@ CERT = os.path.join(HERE, "certificate.json")
 INPUT = os.path.join(ROOT, "tracks", "track-1", "input.json")
 EXPECTED = os.path.join(ROOT, "tracks", "track-1", "expected.json")
 CHECKER = os.path.join(ROOT, "src", "flexure440.py")
-
-PRINTED_KEYS = {
-    "ffu_ksi": ("design_ffu_ksi",),
-    "efd": ("efd",),
-    "ffe_ksi": ("section_ffe_ksi",),
-    "phiMn_existing_kipft": ("existing_phiMn_kipft",),
-    "limit_demand_kipft": ("limit_demand_kipft",),
-    "As_min_in2": ("As_min_in2",),
-    "k": ("service_k",),
-    "kd_in": ("service_kd_in",),
-    "fs_service_ksi": ("service_fs_ksi",),
-    "ff_service_ksi": ("service_ff_ksi",),
-}
+TRACK = os.path.join(ROOT, "tracks", "track-1-flexure-example.md")
 
 
 def sha256(path):
@@ -50,7 +52,20 @@ def sha256(path):
         return hashlib.sha256(fh.read()).hexdigest()
 
 
-def build(date):
+def locked_checker_hash():
+    with open(TRACK, encoding="utf-8") as fh:
+        found = re.search(r"sha256: ([0-9a-f]{64})", fh.read())
+    return found.group(1) if found else None
+
+
+def resolve(out, dotted):
+    node = out
+    for part in dotted.split("."):
+        node = node[part]
+    return node
+
+
+def build(when):
     with open(INPUT, encoding="utf-8") as fh:
         inp = json.load(fh)
     with open(EXPECTED, encoding="utf-8") as fh:
@@ -79,32 +94,62 @@ def build(date):
         "service_kd_in": round(out["service"]["kd_in"], 2),
     }
     printed = {}
-    for key, (vkey,) in PRINTED_KEYS.items():
-        want = exp[key]
-        got = values[vkey]
+    for key, spec in exp.items():
+        raw = resolve(out, spec["field"])
         printed[key] = {
-            "printed": want["printed"], "checker": got, "tol": want["tol"],
-            "match": abs(got - want["printed"]) <= want["tol"],
+            "printed": spec["printed"], "checker": round(raw, 6),
+            "tol": spec["tol"], "match": abs(raw - spec["printed"]) <= spec["tol"],
         }
+    checks = {name: bool(ok) for name, _v, _l, ok in out["checks"]
+              if not name.startswith("Debonding strain")}
+    cap = 0.9 * out["design_material"]["efu"]
+    checks["Debonding cap applied, efd = min(formula, 0.9 efu)"] = (
+        abs(out["efd"] - min(out["efd_uncapped"], cap)) < 1e-12)
     return {
         "result": "track-1-flexure",
-        "date": date,
+        "date": when,
         "checker": {"path": "src/flexure440.py", "sha256": sha256(CHECKER)},
         "input": {"path": "tracks/track-1/input.json", "sha256": sha256(INPUT)},
         "source": inp["source"],
         "values": values,
-        "checks_pass": {name: bool(ok) for name, _v, _l, ok in out["checks"]},
+        "checks_pass": checks,
         "printed_match": printed,
     }
 
 
+def failures(cert):
+    """Every reason this certificate must not be trusted or written."""
+    bad = []
+    locked = locked_checker_hash()
+    if locked is None:
+        bad.append("no checker hash locked in the track file")
+    elif cert["checker"]["sha256"] != locked:
+        bad.append("checker differs from the hash locked in the track file")
+    for key, row in cert["printed_match"].items():
+        if not row["match"]:
+            bad.append(f"printed {key}: checker {row['checker']} "
+                       f"vs printed {row['printed']} (tol {row['tol']})")
+    for name, passed in cert["checks_pass"].items():
+        if not passed:
+            bad.append(f"check failed: {name}")
+    return bad
+
+
 def main(argv):
     if "--write" in argv:
-        date = "2026-10-25"
+        saved = None
         if os.path.exists(CERT):
             with open(CERT, encoding="utf-8") as fh:
-                date = json.load(fh).get("date", date)
-        cert = build(date)
+                saved = json.load(fh)
+        cert = build(saved["date"] if saved else date.today().isoformat())
+        bad = failures(cert)
+        if bad:
+            for line in bad:
+                print(f"FAIL  {line}")
+            print("certificate not written")
+            return 1
+        if saved is not None and saved != cert:
+            cert = build(date.today().isoformat())
         with open(CERT, "w", encoding="utf-8") as fh:
             json.dump(cert, fh, indent=2, sort_keys=True)
             fh.write("\n")
@@ -120,14 +165,13 @@ def main(argv):
         for key in sorted(set(fresh) | set(saved)):
             if fresh.get(key) != saved.get(key):
                 print(f"  differs: {key}")
+    for line in failures(fresh):
+        ok = False
+        print(f"FAIL  {line}")
     for key, row in fresh["printed_match"].items():
-        if not row["match"]:
-            ok = False
         print(f"{'PASS' if row['match'] else 'FAIL'}  printed {key}: "
               f"checker {row['checker']} vs printed {row['printed']} (tol {row['tol']})")
     for name, passed in fresh["checks_pass"].items():
-        if not passed:
-            ok = False
         print(f"{'PASS' if passed else 'FAIL'}  check {name}")
     print("RESULT: PASS" if ok else "RESULT: FAIL")
     return 0 if ok else 1
