@@ -22,7 +22,7 @@ The test for our code is a published worked example. A calculation that cannot m
 
 | Result | Claim | Label |
 |---|---|---|
-| [Track 1 flexure](results/track-1-flexure/PROOF.md) | The checker reproduces the Simpson Strong-Tie worked example on ten printed quantities. Five pass or fail checks pass on that beam, with the source of each named in the result. The strengthened design strength, 481.7 kip-ft against a demand of 457.8 kip-ft, is checker output, stated as such in the result. | VERIFIED for the ten printed quantities |
+| [Track 1 flexure](results/track-1-flexure/PROOF.md) | The checker reproduces the Simpson Strong-Tie worked example on ten printed quantities. Five pass or fail checks pass on that beam, with the source of each named in the result. The strengthened design strength, 481.7 kip-ft against a demand of 457.8 kip-ft, is checker output, stated as such in the result. Service concrete stress is not checked, and a hand calculation puts it above its limit; the result discloses this and does not claim serviceability. | VERIFIED for the ten printed quantities |
 
 ## Open tracks
 
