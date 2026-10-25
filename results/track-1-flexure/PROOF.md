@@ -2,9 +2,11 @@
 
 ## Statement
 
-For the beam in tracks/track-1/input.json, the ACI 440.2R-17 Chapter 10
-flexure checks pass, and the checker that computes them reproduces the
-published worked example it was tested against.
+For the beam in tracks/track-1/input.json, the checker in this repo
+reproduces the published worked example it was tested against, on the
+ten quantities listed under Evidence below. That match is the result.
+What the checker then computes for design strength on this beam is
+stated separately, as checker output, in the same section.
 
 The beam: 14 in wide, 27 in deep, 4 No. 9 bars, concrete 4,000 psi, one
 ply of carbon fabric on the soffit. Source of every input: Simpson
@@ -17,9 +19,12 @@ VERIFIED, by finite check: ten quantities the example prints. The
 checker, run from the input file alone, matches each one inside the
 tolerance in tracks/track-1/expected.json. verify.py in this folder
 replays the match. The ten: design FRP strength, debonding strain, FRP
-stress at ultimate, existing design strength, strengthening limit
-demand, minimum steel, cracked section factor k, kd, service steel
-stress, service FRP stress.
+stress, existing design strength, strengthening limit demand, minimum
+steel, cracked section factor k, kd, service steel stress, service FRP
+stress. One of the ten needs its note: the FRP stress is the capped
+stress, Ef times the debonding strain. The example prints it at a trial
+depth. The cap makes it the same value at the converged depth, and the
+match is a match of that capped stress.
 
 Computed by that checker, and labelled as checker output, not as
 printed values: the converged section and the strengthened strength.
@@ -41,7 +46,7 @@ From certificate.json in this folder. Reproduce with verify.py.
 | Debonding strain efd | 0.0049, limit 0.0069 | VERIFIED, printed |
 | Neutral axis c | 7.49 in | checker output |
 | Governing mode | FRP debonding controls | checker output |
-| FRP stress at ultimate ffe | 69.9 ksi | VERIFIED, printed 70 |
+| Capped FRP stress ffe | 69.9 ksi | VERIFIED, printed 70 at a trial depth |
 | Existing design strength | 386.6 kip-ft | VERIFIED, printed 387 |
 | Strengthening limit demand | 330.1 kip-ft | VERIFIED, printed 330 |
 | Minimum steel As,min | 1.12 sq in | VERIFIED, printed |
@@ -51,9 +56,23 @@ From certificate.json in this folder. Reproduce with verify.py.
 | Service steel stress | 46.1 ksi, limit 48 | VERIFIED, printed |
 | Service FRP stress | 8.6 ksi, limit 59.8 | VERIFIED, printed |
 
-All six checks the checker runs pass on this beam: minimum steel,
-debonding strain cap, strengthening limit, design strength against Mu,
-service steel stress, service FRP stress.
+Five pass or fail checks pass on this beam, each with its source:
+
+| Check | Source |
+|---|---|
+| Design strength, phi Mn against Mu | ACI 440.2R-17, Chapter 10 |
+| Service steel stress | ACI 440.2R-17, Section 10.2.8 |
+| Service FRP stress | ACI 440.2R-17, Section 10.2.9 |
+| Minimum steel | ACI 318, as the example cites it |
+| Strengthening limit | ACI 562-16, Section 5.5.2, in the form the example uses |
+
+The strengthening limit here is the worked example's own check. Track 2
+covers the ACI 440.2R-17 Section 9.2 limit and the fire case in full.
+
+The debonding strain is a definition, not a sixth check: the formula
+value, capped at 0.9 times the design rupture strain. The replay asserts
+the cap is applied, and a unit test drives an input whose uncapped
+strain runs far past the cap to prove the cap holds.
 
 ## How the numbers are derived
 
