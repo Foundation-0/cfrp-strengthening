@@ -4,7 +4,7 @@
     "sha256": "77583629134777eb507a39cc6cb47b8297d1b5d3336f2bbea66345179a81d872"
   },
   "checks_pass": {
-    "Debonding strain, efd <= 0.9 efu": true,
+    "Debonding cap applied, efd = min(formula, 0.9 efu)": true,
     "Design strength, phiMn >= Mu": true,
     "Minimum steel, As >= As,min": true,
     "Service FRP stress, ff,s <= 0.55 ffu": true,
@@ -21,61 +21,61 @@
       "checker": 1.12,
       "match": true,
       "printed": 1.12,
-      "tol": 0.02
+      "tol": 0.005
     },
     "efd": {
-      "checker": 0.0049,
+      "checker": 0.004925,
       "match": true,
       "printed": 0.0049,
-      "tol": 0.0001
+      "tol": 5e-05
     },
     "ff_service_ksi": {
-      "checker": 8.6,
+      "checker": 8.615777,
       "match": true,
       "printed": 8.6,
-      "tol": 0.2
+      "tol": 0.05
     },
     "ffe_ksi": {
-      "checker": 69.9,
+      "checker": 69.937043,
       "match": true,
       "printed": 70.0,
-      "tol": 1.0
+      "tol": 0.5
     },
     "ffu_ksi": {
       "checker": 108.8,
       "match": true,
       "printed": 108.8,
-      "tol": 0.15
+      "tol": 0.05
     },
     "fs_service_ksi": {
-      "checker": 46.1,
+      "checker": 46.131044,
       "match": true,
       "printed": 46.1,
-      "tol": 0.2
+      "tol": 0.05
     },
     "k": {
-      "checker": 0.3708,
+      "checker": 0.370796,
       "match": true,
       "printed": 0.3709,
       "tol": 0.001
     },
     "kd_in": {
-      "checker": 8.9,
+      "checker": 8.899093,
       "match": true,
       "printed": 8.9,
-      "tol": 0.05
+      "tol": 0.005
     },
     "limit_demand_kipft": {
-      "checker": 330.1,
+      "checker": 330.078125,
       "match": true,
       "printed": 330.0,
-      "tol": 1.0
+      "tol": 0.5
     },
     "phiMn_existing_kipft": {
-      "checker": 386.6,
+      "checker": 386.621849,
       "match": true,
       "printed": 387.0,
-      "tol": 1.0
+      "tol": 0.5
     }
   },
   "result": "track-1-flexure",
