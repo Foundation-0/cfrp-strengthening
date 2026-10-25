@@ -7,7 +7,7 @@ account that merged a pull request are recorded from GitHub.
 |---|---|---|---|
 | 2026-10-25 | Scaffold pull request #1 | Merged by fdn-0 | On main |
 | 2026-10-25 | Checker pull request #2 | Merged by fdn-0 | On main. Checker hash locked in the Track 1 file |
-| 2026-10-25 | Track 1 result, results/track-1-flexure/ | Prepared by Nawab (hyd-nawab), Muse Spark by Meta, for Shahid Arifuddin | In review in its pull request. Not merged, not yet a reviewed result |
+| 2026-10-25 | Track 1 result, results/track-1-flexure/ | Reviewed by fdn-0 in pull request #3, 15 comments, addressed there | On main via pull request #3. Its live state is on GitHub |
 
 No outside human engineering review of the Track 1 numbers has happened
 yet. The labels in the result say what was actually done: a finite check
