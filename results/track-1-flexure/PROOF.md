@@ -61,13 +61,16 @@ Five pass or fail checks pass on this beam, each with its source:
 | Check | Source |
 |---|---|
 | Design strength, phi Mn against Mu | ACI 440.2R-17, Chapter 10 |
-| Service steel stress | ACI 440.2R-17, Section 10.2.8 |
+| Service steel stress | ACI 440.2R-17, Section 10.2.8, steel limit only |
 | Service FRP stress | ACI 440.2R-17, Section 10.2.9 |
 | Minimum steel | ACI 318, as the example cites it |
-| Strengthening limit | ACI 562-16, Section 5.5.2, in the form the example uses |
+| Strengthening limit | ACI 440.2R-17, Eq. (9.2), as the example computes it |
 
-The strengthening limit here is the worked example's own check. Track 2
-covers the ACI 440.2R-17 Section 9.2 limit and the fire case in full.
+The combination the example computes for the strengthening limit is
+1.1 dead + 0.75 live, which is Eq. (9.2). The example text cites
+ACI 562-16, Section 5.5.2 for the check. That section's own combination
+is different: 1.2 dead + 0.5 live gives 320.3 kip-ft here, not the
+printed 330. Track 2 covers the fire case and the rest of Section 9.2.
 
 The debonding strain is a definition, not a sixth check: the formula
 value, capped at 0.9 times the design rupture strain. The replay asserts
@@ -101,6 +104,15 @@ one published example. A match on one example shows the checker follows
 the method on that example. It does not show the checker is right on
 beams unlike this one, and it is not a design for any real structure.
 
+One gap is stated plainly. Section 10.2.8 also limits concrete
+compressive stress under service loads, and neither the checker nor the
+example's printed checks cover it. By hand from the checker's cracked
+section (kd = 8.90 in, service steel stress 46.1 ksi) the concrete
+stress is about 3.38 ksi. That is above the limit, 1.8 ksi at
+0.45 f'c and 2.4 ksi at 0.60 f'c. So on that one service limit this
+beam fails, and this result does not claim serviceability. Adding the
+check belongs to the checker pull request; it is item 1 of issue #4.
+
 ## Reproduce
 
 ```
@@ -110,6 +122,8 @@ make verify
 
 ## Open obligations
 
+- Add the service concrete stress check (Section 10.2.8) in a checker
+  pull request, issue #4 item 1. The result then gets regenerated.
 - Confirm the strengthened phi Mn and converged c against the publisher
   copy of the example, and record the pages.
 - Confirm the exposure statement behind the factor 0.85.
