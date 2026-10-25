@@ -15,6 +15,12 @@ Strengthening Concrete Structures. American Concrete Institute, Committee 440,
   ACI for the full method.
 - Numbers from the guide, such as a material factor, are facts of the method
   and are cited to their section.
+- One citation is worth recording. The strengthening limit the checker
+  computes is the Eq. (9.2) combination, 1.1 dead + 0.75 live. The Simpson
+  example text cites ACI 562-16, Section 5.5.2 for that check, and
+  ACI 562's own combination is different (1.2 dead + 0.5 live, from ACI's
+  published webinar material). The example's printed numbers follow
+  Eq. (9.2), so this repo cites Eq. (9.2) and records the difference here.
 
 ## ACI 318
 

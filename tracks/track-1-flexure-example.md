@@ -25,6 +25,7 @@ Beam and concrete:
   125 k-ft live.
 - Span L = 25 ft. Loads: dead wDL = 2.75 k/ft, existing live 1.00 k/ft,
   new live wLL = 1.60 k/ft.
+- Support condition: simple span under uniform load. Fiber: carbon.
 
 Steel:
 
@@ -68,11 +69,10 @@ from the inputs alone.
   and the design moment phi Mn printed in the example, from the publisher
   copy, and confirm the checker outputs below against them.
 - Confirm the exposure statement behind CE = 0.85 on the publisher copy.
-- Checker wording, for a future checker pull request: the checker's
-  printed output lists the debonding strain beside its own cap as a pass
-  or fail check. It is a definition with a cap, not a check. The result
-  replay and the unit tests treat it that way already. The checker is
-  hash locked, so this fix does not ride in a result pull request.
+- Checker wording, done in the issue #4 checker pull request: the
+  checker's printed output now names the debonding strain line as the
+  definition it is, prints strains at four decimals, and sends its JSON
+  to stdout with the check lines on stderr.
 - Page-level citations for the inputs and results above, checked against
   the publisher copy. The values above were recorded from the example
   text. Any value the publisher copy does not confirm gets corrected
@@ -81,7 +81,7 @@ from the inputs alone.
 ## Checker
 
 src/flexure440.py, standard library only.
-sha256: 77583629134777eb507a39cc6cb47b8297d1b5d3336f2bbea66345179a81d872
+sha256: 4e6b31184ac13508bb22e676149d072f8ca90ae72c3976a73a16b48100caf42c
 
 Run it:
 
@@ -90,7 +90,7 @@ python3 src/flexure440.py tracks/track-1/input.json
 make verify
 ```
 
-Checker output on the example inputs, 2026-10-25. Six tests pass
+Checker output on the example inputs, 2026-10-25. Eighteen tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
 tolerance in expected.json. Each tolerance is half the precision the
@@ -115,6 +115,19 @@ Result recorded 2026-10-25 in results/track-1-flexure/. The result
 stands on the matched printed values alone. The strengthened phi Mn
 stays labelled checker output there until the publisher copy confirms
 it.
+
+Checker revision, 2026-10-25, for issue #4. The checker changed, and
+its hash above is the new lock. What changed: the service concrete
+stress check of Section 10.2.8 is in, and this beam fails it (3.38 ksi
+against a limit of 1.8 ksi). The existing strength no longer assumes
+the steel yields. The crushing mode uses the Whitney block. The solver
+refuses an unbalanced section instead of reporting one. FRP strain is
+clamped at zero. Mu includes the 1.4 dead load combination. The
+support condition and the fiber type are inputs, and the creep rupture
+stress is taken at the sustained moment when one is given. The printed
+values this track is tested against did not change. The result in
+results/track-1-flexure/ still belongs to the old checker until a
+result pull request regenerates its certificate against this one.
 
 ## Failed attempts
 
