@@ -2,7 +2,7 @@
 
 Carbon fiber fabric can make a weak concrete beam carry more load. The design checks for that work sit in ACI 440.2R, the guide for externally bonded FRP strengthening. This project turns those checks into small public calculations that anyone can re-run, step by step, from the inputs alone.
 
-Status: Seed, moving toward Active. The Track 1 checker is built and its tests match the worked example. No result is recorded yet.
+Status: Active. One result is recorded, for Track 1.
 
 ## What this is
 
@@ -18,9 +18,16 @@ Ours: the code, the tests, the plain language notes, and any errors in them. Thi
 
 The test for our code is a published worked example. A calculation that cannot match a published example is wrong, and this repo will say so in the open. See tracks/track-1-flexure-example.md.
 
+## Results
+
+| Result | Claim | Label |
+|---|---|---|
+| [Track 1 flexure](results/track-1-flexure/PROOF.md) | The checker reproduces the Simpson Strong-Tie worked example on ten printed quantities, and all six ACI 440.2R-17 flexure checks pass on that beam. Strengthened design strength 481.7 kip-ft against a demand of 457.8 kip-ft is checker output, stated as such in the result. | VERIFIED for the ten printed quantities |
+
 ## Open tracks
 
-- Track 1: flexure checks for one beam, tested against the Simpson Strong-Tie worked example. See tracks/README.md.
+- Track 1: flexure checks for one beam, tested against the Simpson Strong-Tie worked example. Result recorded. See tracks/README.md.
+- Later tracks are listed in tracks/README.md. They open one at a time.
 
 ## Who signs for this work
 
