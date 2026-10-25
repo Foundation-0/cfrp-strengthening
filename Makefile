@@ -5,9 +5,12 @@ export OMP_NUM_THREADS := 1
 
 verify: verify-fast verify-track-1-flexure verify-hashes
 
+# The checker run is piped to a JSON parse, not gated on its exit code:
+# a beam that fails a check exits 1 by design, and the tests assert the
+# outcomes. The check lines stay visible on stderr when something fails.
 verify-fast:
 	python3 -m unittest discover -s tests -v
-	python3 src/flexure440.py tracks/track-1/input.json > /dev/null
+	python3 src/flexure440.py tracks/track-1/input.json | python3 -c "import json, sys; json.load(sys.stdin)"
 
 verify-track-1-flexure:
 	python3 results/track-1-flexure/verify.py
