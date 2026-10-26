@@ -5,12 +5,14 @@ export OMP_NUM_THREADS := 1
 
 verify: verify-fast verify-track-1-flexure verify-hashes
 
-# The checker run is piped to a JSON parse, not gated on its exit code:
-# a beam that fails a check exits 1 by design, and the tests assert the
-# outcomes. The check lines stay visible on stderr when something fails.
+# The checker run is gated on its exit code and on its JSON.
+# A beam that fails a check exits 1 by design, so exit 0 and exit 1
+# pass when the output is valid JSON with no NaN or Infinity value.
+# Exit 2, a crash, invalid JSON, or a NaN or Infinity value fails.
+# The check lines stay visible on stderr when something fails.
 verify-fast:
 	python3 -m unittest discover -s tests -v
-	python3 src/flexure440.py tracks/track-1/input.json | python3 -c "import json, sys; json.load(sys.stdin)"
+	python3 -c "import json, subprocess, sys; p = subprocess.run([sys.executable, 'src/flexure440.py', 'tracks/track-1/input.json'], stdout=subprocess.PIPE, text=True); sys.stdout.write(p.stdout); json.loads(p.stdout, parse_constant=lambda c: (_ for _ in ()).throw(ValueError('invalid JSON constant: ' + c))); sys.exit(0 if p.returncode in (0, 1) else 1)"
 
 verify-track-1-flexure:
 	python3 results/track-1-flexure/verify.py
