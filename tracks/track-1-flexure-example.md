@@ -49,10 +49,13 @@ from the inputs alone.
 - Existing strength of the beam without FRP: phi Mn = 387 k-ft.
 - Strengthening limit: the existing strength must cover the limit
   moment (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
-  The example text cites ACI 562-16, Section 5.5.2 for this check, but
-  the combination it computes, 1.1 dead + 0.75 live, is ACI 440.2R-17
-  Eq. (9.2). The 562 combination (1.2 dead + 0.5 live) gives 320.3 k-ft,
-  not the printed 330. The result cites Eq. (9.2), as computed.
+  The example text cites ACI 562-16, Section 5.5.2 for this check, and
+  with no snow that citation is consistent: ACI's provisional 562-16
+  text gives Eq. (5.5.2) as 1.1D + 0.75L + 0.2S, the same form as
+  ACI 440.2R-17 Eq. (9.2). The result cites Eq. (9.2), as computed.
+  The 1.2 dead + 0.5 live form, 320.3 k-ft here, is a different check,
+  the extraordinary event combination of ACI 562-16 Section 5.5.3. See
+  NOTICE.
 - Debonding strain efd = 0.0049. Limit 0.9 times efu = 0.0069. Debonding
   controls the design strain.
 - First pass with neutral axis c = 6 in: effective FRP strain efe is capped
@@ -81,7 +84,7 @@ from the inputs alone.
 ## Checker
 
 src/flexure440.py, standard library only.
-sha256: 4e6b31184ac13508bb22e676149d072f8ca90ae72c3976a73a16b48100caf42c
+sha256: 8c9fdaeb7d65d4d11182762c5f269e4bd52dacba4876caf546feb0a70ba5b706
 
 Run it:
 
@@ -90,7 +93,7 @@ python3 src/flexure440.py tracks/track-1/input.json
 make verify
 ```
 
-Checker output on the example inputs, 2026-10-25. Eighteen tests pass
+Checker output on the example inputs, 2026-10-26. Forty-two tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
 tolerance in expected.json. Each tolerance is half the precision the
@@ -119,7 +122,7 @@ it.
 Checker revision, 2026-10-25, for issue #4. The checker changed, and
 its hash above is the new lock. What changed: the service concrete
 stress check of Section 10.2.8 is in, and this beam fails it (3.38 ksi
-against a limit of 1.8 ksi). The existing strength no longer assumes
+against a limit of 2.40 ksi). The existing strength no longer assumes
 the steel yields. The crushing mode uses the Whitney block. The solver
 refuses an unbalanced section instead of reporting one. FRP strain is
 clamped at zero. Mu includes the 1.4 dead load combination. The
@@ -128,6 +131,26 @@ stress is taken at the sustained moment when one is given. The printed
 values this track is tested against did not change. The result in
 results/track-1-flexure/ still belongs to the old checker until a
 result pull request regenerates its certificate against this one.
+
+Checker revision, 2026-10-26, audit fixes on top of the issue #4
+checker. The hash above now locks this revision. What changed:
+the service concrete stress limit is 0.60 f'c, the ACI 440.2R-17 value
+(0.45 f'c was the 2008 edition), and this beam still fails it, 3.38 ksi
+against 2.40 ksi. A substrate check, f'c >= 2500 psi (Section 1.2.1.4),
+is in; pull-off strength is checked when the input gives one, and the
+substrate condition is always listed as NOT CHECKED. The strengthening
+limit uses a live load factor of 1.0 when the input marks the live load
+as sustained. Input is validated before any calculation, and the exit
+code is 0 when every check passes, 1 when a check fails, and 2 when
+the calculation could not run. The solver keeps every force
+equilibrium and uses the lowest phi Mn when there is more than one;
+on this beam there is one. The FRP stress, not its strain, is now
+clamped at zero, so the steel strain stays on the section's strain
+profile; clamping the strain overstated phi Mn by up to about 11% where
+the FRP would be in compression. The support condition must be exactly
+a simple span under uniform load, and the JSON on stdout now carries
+every check verdict and an overall all_pass. The printed values this
+track is tested against did not change.
 
 ## Failed attempts
 

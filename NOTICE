@@ -16,11 +16,27 @@ Strengthening Concrete Structures. American Concrete Institute, Committee 440,
 - Numbers from the guide, such as a material factor, are facts of the method
   and are cited to their section.
 - One citation is worth recording. The strengthening limit the checker
-  computes is the Eq. (9.2) combination, 1.1 dead + 0.75 live. The Simpson
-  example text cites ACI 562-16, Section 5.5.2 for that check, and
-  ACI 562's own combination is different (1.2 dead + 0.5 live, from ACI's
-  published webinar material). The example's printed numbers follow
-  Eq. (9.2), so this repo cites Eq. (9.2) and records the difference here.
+  computes is the Eq. (9.2) combination, 1.1 dead + 0.75 live, and this
+  repo cites Eq. (9.2). The Simpson example text cites ACI 562-16,
+  Section 5.5.2 for the same check, and with no snow that citation is
+  consistent. ACI's provisional text of ACI 562-16
+  (concrete.org/Portals/0/Files/PDF/562-16_Provisional.pdf) gives
+  Eq. (5.5.2) as 1.1D + 0.75L + 0.2S, and its Section 5.5.2.1 raises the
+  live load factor to 1.0 for sustained live load. ACI's webinar slides
+  (concrete.org/portals/0/files/pdf/webinars/ws_2017_0417_Alkhrdaji_DSREARS.pdf)
+  show the 562-16 draft as Eqs. (5.5.2a) 1.1D + 0.5L + 0.2S and
+  (5.5.2b) 1.1D + 0.75L. The 1.2 dead + 0.5 live form is a different
+  check, the extraordinary event combination: ACI 562-16 Section 5.5.3,
+  and ACI 562-13 Eq. (5.5.1). Eq. (9.2) carries the same sustained live
+  load note. From ACI 562 we use these combinations and their numbers
+  only, not its text.
+- The service concrete stress limit of Section 10.2.8 is 0.60 f'c in the
+  2017 edition. The 2008 edition had 0.45 f'c. The factor is taken from
+  published material, not the guide text: ACI webinar slides,
+  "Investigating the Effects of U-Wrap Anchored Doubly Strengthened RC
+  Beams with CFRP Sheets" (Al Shboul and Rasheed, ACI, 2023), state the
+  0.6 f'c limit of ACI 440.2R-17, and the Sika CarboDur user manual for
+  ACI PRC-440.2-23, Section 2.2.1, gives Eq. (10.2.8b), fc,s <= 0.60 f'c.
 
 ## ACI 318
 
