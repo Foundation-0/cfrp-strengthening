@@ -23,6 +23,11 @@ done to check each result.
 ## Prior work credited by name
 
 - ACI Committee 440: the ACI 440.2R design method this repo implements.
+- ACI Committee 318: the ACI 318 rules the checker uses for the existing
+  section, minimum steel, the strength reduction factor, and the design
+  load combination. See NOTICE.
+- ACI Committee 562: ACI 562-16, whose Section 5.5.2 the worked example
+  cites for its strengthening limit check. See NOTICE.
 - Simpson Strong-Tie: the published worked example used as the Track 1 test
   set. See NOTICE.
 

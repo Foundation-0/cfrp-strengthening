@@ -48,10 +48,7 @@ from the inputs alone.
 - Existing strength of the beam without FRP: phi Mn = 387 k-ft.
 - Strengthening limit: the existing strength must cover the limit
   moment (1.1 wDL + 0.75 wLL) L^2 / 8 = 330 k-ft. 387 covers 330, pass.
-  The example text cites ACI 562-16, Section 5.5.2 for this check, but
-  the combination it computes, 1.1 dead + 0.75 live, is ACI 440.2R-17
-  Eq. (9.2). The 562 combination (1.2 dead + 0.5 live) gives 320.3 k-ft,
-  not the printed 330. The result cites Eq. (9.2), as computed.
+  The example text cites ACI 562-16, Section 5.5.2 for this check.
 - Debonding strain efd = 0.0049. Limit 0.9 times efu = 0.0069. Debonding
   controls the design strain.
 - First pass with neutral axis c = 6 in: effective FRP strain efe is capped
@@ -62,8 +59,29 @@ from the inputs alone.
   pass. FRP stress under service loads ff,s = 8.6 ksi, limit 0.55 ffu =
   60 ksi, pass.
 
+KNOWN, from ACI's published material on ACI 562-16 and ACI 562-13 and
+from ACI 440.2R-17, not from the example (see NOTICE): the example's
+citation of ACI 562-16 Section 5.5.2 is consistent with what it
+computes. ACI's provisional text of ACI 562-16 gives Eq. (5.5.2) as
+phi Rn >= 1.1D + 0.75L + 0.2S. ACI's webinar slides give Section 5.5.2
+as two equations, (5.5.2a) 1.1D + 0.5L + 0.2S and (5.5.2b) 1.1D + 0.75L.
+The published code has not been read here. In either form, 1.1 dead +
+0.75 live with no snow load is a Section 5.5.2 combination, the same as
+ACI 440.2R-17 Eq. (9.2). The result cites Eq. (9.2), with ACI 562-16
+Section 5.5.2 as the same combination when S = 0. The 1.2D + 0.5L +
+0.2S form is a different case: the extraordinary-event combination,
+ACI 562-16 Section 5.5.3 (ACI 562-13 Eq. 5.5.1). Section 5.5.2.1 of the
+provisional text raises the live load factor to 1.0 for sustained live
+load. The checker does not model that (see #8).
+
 ## Open obligations
 
+- Service concrete stress, ACI 440.2R-17 Section 10.2.8, is not
+  checked, and the Track 1 beam fails it. By hand from the checker's
+  cracked section, fc,s is about 3.38 ksi against the limit
+  0.60 f'c = 2.40 ksi. Add the check in a checker pull request, issue #4
+  item 1. Also confirm on the publisher copy whether the example checks
+  fc,s. The parts of the example read so far do not print it.
 - Extract the final converged neutral axis depth, the nominal moment Mn,
   and the design moment phi Mn printed in the example, from the publisher
   copy, and confirm the checker outputs below against them.
@@ -123,3 +141,11 @@ it.
   the initial soffit strain on the FRP force. The example's closed form
   carries that strain, and the checker now uses it. Recorded here so the
   next reader does not repeat it.
+- An earlier version of this file and of the result's PROOF.md said the
+  combination of ACI 562-16 Section 5.5.2 is 1.2 dead + 0.5 live,
+  320.3 k-ft on these loads, so the example mis-cites it. That was
+  wrong. 1.2D + 0.5L + 0.2S is the extraordinary-event combination,
+  Section 5.5.3. Section 5.5.2 contains 1.1D + 0.75L (with + 0.2S in the
+  provisional text), which is what the example computes, and the
+  checker docstring's citation of it is consistent. Issue #4 item 6 rests on the same mistake; see
+  #9. Recorded here so the next reader does not repeat it.

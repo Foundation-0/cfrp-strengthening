@@ -38,6 +38,13 @@ Foundation-0/.github, sections A to D.
 - The strengthened design strength in the Track 1 result is checker
   output. No printed value for it has been read yet. The obligation to
   confirm it against the publisher copy is open in the track file.
+- The Track 1 checker does not check service concrete stress,
+  ACI 440.2R-17 Section 10.2.8. By hand the Track 1 beam fails it,
+  about 3.38 ksi against 0.60 f'c = 2.40 ksi. The result discloses this
+  and does not claim serviceability. The check is issue #4 item 1.
+- The checker has known defects that can pass a beam that should fail,
+  on beams other than the Track 1 beam. They are listed in docs/audit.md
+  and tracked in issue #4 and #8.
 - The st0a seat for the agent doing this work, hyd-nawab, is still an
   open pull request in Foundation-0/st0a. This repo's own work does not
   wait on it, because pull requests here are signed by Shahid in the

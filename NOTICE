@@ -9,21 +9,55 @@ Guide for the Design and Construction of Externally Bonded FRP Systems for
 Strengthening Concrete Structures. American Concrete Institute, Committee 440,
 2017.
 
-- What we use: the design method, its equations, and its section numbers.
+- What we use: the design method, its equations, and its section numbers,
+  including the stress block factors of Chapter 10 for the strengthened
+  section.
 - What we do not take: the text, tables, and figures of the guide. The guide
   is copyrighted by ACI and is not freely reusable. Buy or license it from
   ACI for the full method.
-- Numbers from the guide, such as a material factor, are facts of the method
-  and are cited to their section.
+- Numbers from the guide, such as a material factor, are facts of the method.
+  Each is to be cited to its section. That is not done yet: the checker's
+  constants and checks carry no section, equation, or table number, and only
+  the check-level sources in the Track 1 PROOF.md are cited. Open, see
+  #12.
 
-## ACI 318
+## ACI 318-14
 
 Building Code Requirements for Structural Concrete. American Concrete
-Institute.
+Institute, Committee 318.
 
 - What we use: the concrete stress block factors and steel rules that
-  ACI 440.2R-17 points to.
+  ACI 440.2R-17 points to (the Whitney stress block for the existing,
+  unstrengthened section, beta1, minimum steel, and the strength reduction
+  factor), and the load combinations of Table 5.3.1 for the design demand.
+  The checker uses only the 1.2D + 1.6L form from that table and does not
+  check 1.4D yet (issue #4 item 7).
+- Edition: the checker's ACI 318 rules match ACI 318-14. Later editions
+  supersede it. The ACI 318-19 form of the strength reduction factor
+  differs, which would change the existing-section phi only; the
+  strengthened-section phi follows ACI 440.2R-17.
 - Copyrighted by ACI. Cited, not copied.
+
+## ACI 562-16
+
+Code Requirements for Assessment, Repair, and Rehabilitation of Existing
+Concrete Structures. American Concrete Institute, Committee 562, 2016.
+
+- What we use: the strengthening-limit form of Section 5.5.2, which the
+  Track 1 worked example cites for its strengthening limit check. ACI's
+  provisional text gives it as Eq. (5.5.2), phi Rn >= 1.1D + 0.75L + 0.2S
+  (concrete.org/Portals/0/Files/PDF/562-16_Provisional.pdf). ACI's webinar
+  slides give it as Eqs. (5.5.2a) 1.1D + 0.5L + 0.2S and (5.5.2b)
+  1.1D + 0.75L
+  (concrete.org/portals/0/files/pdf/webinars/ws_2017_0417_Alkhrdaji_DSREARS.pdf).
+  The published code has not been read here. With no snow load, either
+  form contains the same combination as ACI 440.2R-17 Eq. (9.2). Section 5.5.2.1, which
+  raises the live load factor to 1.0 for sustained live load, is not modelled
+  yet (see #8). The 2013 edition, ACI 562-13, is named only to
+  place the 1.2D + 0.5L + Ak + 0.2S combination, its Eq. (5.5.1).
+- What we do not take: the text of the code. It is copyrighted by ACI.
+  Cited, not copied. ACI has published a provisional text of the 2016
+  edition at concrete.org.
 
 ## Simpson Strong-Tie worked example
 
@@ -32,12 +66,21 @@ Simpson Strong-Tie, 2020. A five-page worked example that follows
 ACI 440.2R-17 step by step.
 
 - What we use: its input values and its printed results, as the test set for
-  Track 1. Printed numbers are recorded in tracks/track-1-flexure-example.md
-  with the page they came from.
+  Track 1. Printed numbers are recorded in tracks/track-1-flexure-example.md.
+  They are not yet recorded with the page they came from. Page citations are
+  an open obligation in that file (issue #5 item 5).
 - What we do not take: its text, layout, and figures. Copyright stays with
   Simpson Strong-Tie.
 - Flag: do not assume this document is freely reusable. Cite it, link to the
-  publisher, and record only the numbers a checker needs.
+  publisher, and record only the numbers a checker needs. No publisher link
+  or document number is recorded yet; that is open too (issue #5 item 7).
+
+## Editions
+
+ACI PRC-440.2-23 supersedes ACI 440.2R-17, and ACI CODE-562-21 supersedes
+ACI 562-16. This repo deliberately follows the 2017 and 2016 editions,
+because the Track 1 worked example uses them. The differences between those
+editions and the later ones have not been reviewed yet.
 
 ## Rule for new sources
 
