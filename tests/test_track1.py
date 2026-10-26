@@ -137,6 +137,38 @@ class DesignOutcomes(unittest.TestCase):
         self.assertAlmostEqual(self.out["service"]["fc_service_ksi"], 3.379, delta=0.001)
         self.assertAlmostEqual(self.out["service_limits"]["fc_service_ksi"], 2.40, delta=1e-9)
 
+    def test_strengthened_section_pinned(self):
+        # Regression pins, worked by hand; the example does not print them.
+        # Debonding controls: efe = efd = 0.0049251, so ffe = 69.937 ksi and
+        # FRP force 0.96 * 69.937 = 67.14 kips. At c = 7.4927 in,
+        # ec = (0.0049251 + 0.0013) * c/(27 - c) = 0.002391, e'c = 1.7*4/3605
+        # = 0.0018863, x = 1.2676, alpha1 beta1 = x - x^2/3 = 0.7320,
+        # beta1 = (4 - x)/(6 - 2x) = 0.7886, alpha1 = 0.9282.
+        # C = 0.7320 * 4 * 14 * 7.4927 = 307.14 = 4*60 + 67.14 kips.
+        # Mn = [240 (24 - 2.954) + 0.85 * 67.14 (27 - 2.954)] / 12
+        #    = 535.27 kip-ft; es = 0.006225 * 16.507/19.507 = 0.00527, so
+        # phi = 0.90 and phiMn = 481.74. Mu = 1.2*2.75 + 1.6*1.6 = 5.86 k/ft,
+        # 5.86 * 25^2/8 = 457.81 kip-ft (1.4D = 300.78 does not govern).
+        hand = {"section.c_in": (7.4927, 0.001), "section.alpha1": (0.9282, 0.0001),
+                "section.beta1": (0.7886, 0.0001), "Mn_kipft": (535.27, 0.02),
+                "phi": (0.90, 1e-9), "phiMn_kipft": (481.74, 0.02),
+                "design_demand_Mu_kipft": (457.81, 0.01)}
+        for key, (value, tol) in hand.items():
+            with self.subTest(key):
+                got = self.out
+                for part in key.split("."):
+                    got = got[part]
+                self.assertAlmostEqual(got, value, delta=tol)
+
+    def test_design_strength_fails_just_above_phimn(self):
+        # wLL_new 1.8: Mu = (1.2*2.75 + 1.6*1.8) * 25^2/8 = 6.18 * 78.125
+        # = 482.81 kip-ft, just above phiMn 481.74, so the check FAILs.
+        out = flexure440.run(variant(**{"loads.wLL_new_kipft": 1.8}))
+        checks = {name: ok for name, _v, _l, ok in out["checks"]}
+        self.assertAlmostEqual(out["design_demand_Mu_kipft"], 482.81, delta=0.01)
+        self.assertAlmostEqual(out["phiMn_kipft"], 481.74, delta=0.02)
+        self.assertFalse(checks["Design strength, phiMn >= Mu"])
+
 
 class DebondingCap(unittest.TestCase):
     def test_cap_applies_when_formula_runs_past_it(self):

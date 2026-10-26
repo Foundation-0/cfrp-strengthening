@@ -93,7 +93,7 @@ python3 src/flexure440.py tracks/track-1/input.json
 make verify
 ```
 
-Checker output on the example inputs, 2026-10-26. Forty-two tests pass
+Checker output on the example inputs, 2026-10-26. Forty-four tests pass
 (tests/test_track1.py). The test file compares ten checker values with
 the printed values in expected.json, and every one matches inside the
 tolerance in expected.json. Each tolerance is half the precision the
