@@ -16,7 +16,7 @@ KNOWN, and not ours: the design method. It comes from ACI 440.2R, written by ACI
 
 Ours: the code, the tests, the plain language notes, and any errors in them. This repo does not copy the text or the figures of the ACI guide. It cites the guide and uses its method.
 
-The test for our code is a published worked example. A calculation that cannot match a published example is wrong, and this repo will say so in the open. See tracks/track-1-flexure-example.md.
+The test for our code is a published worked example. A calculation that cannot match a published example is treated as wrong until the difference is explained. Published examples carry rounding and sometimes errors of their own, so a mismatch starts an inquiry, and this repo records the outcome in the open either way. See tracks/track-1-flexure-example.md.
 
 ## Results
 

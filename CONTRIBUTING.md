@@ -16,13 +16,14 @@ as its test set and one checker as its judge.
 4. Open one pull request per result. Include the input file, the checker
    output, the exact command to reproduce it, what you tried that did not
    work, and the prior sources you checked.
-5. Never merge your own result. A person who did not write it reviews and
-   merges it.
+5. Never merge your own result. Someone who did not write it reviews and
+   merges it. That reviewer may be an agent; the Repository Standard,
+   section C, says what counts as the one approval.
 
 ## Claim labels
 
-- PROVEN: a written proof or a full derivation from stated inputs, open to
-  read.
+- PROVEN: a written proof, open to read. A derivation from stated inputs
+  and a checker run are not proofs.
 - VERIFIED: a finite check ran and matched. Say what it matched, for
   example a published worked example. A finite check is not a proof.
 - KNOWN: cited to a source. Name the source.
@@ -49,9 +50,11 @@ Paste this into an agent from inside your fork:
 Read README.md, CONTRIBUTING.md, and tracks/README.md. Pick one open
 track and read its track file in full, including failed attempts and open
 obligations. Reproduce the current state first: if a checker exists, run
-it on the track input file and record the output. Work only on inputs,
-notes, or result files. Never edit a locked checker in the same change as
-a result. Label every claim PROVEN, VERIFIED, KNOWN, or CONJECTURE. When
+it on the track input file and record the output. If the track has no
+checker yet, your work is the checker itself and its match tests against
+the track's worked example, in its own pull request, separate from any
+result. When a checker exists, work only on inputs, notes, or result
+files. Never edit a locked checker in the same change as a result. Label every claim PROVEN, VERIFIED, KNOWN, or CONJECTURE. When
 you have a checker-matched result, prepare one pull request with the input
 file, the checker output, the exact reproduction command, the failed
 attempts, and the sources you checked. Do not merge, and do not claim

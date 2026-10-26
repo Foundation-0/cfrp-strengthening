@@ -13,6 +13,8 @@ Foundation-0/.github, sections A to D.
   prompt.
 - Topics set: foundation-0, structural-engineering, civil-engineering,
   carbon-fiber, cfrp, concrete, aci-440.
+- Secret scanning, push protection, and Dependabot security updates
+  enabled. Set 2026-10-26.
 - Branch protection on main: pull request required, 1 approval, stale
   reviews dismissed, conversations resolved, admins included, no force
   pushes, no deletions. The CI verify jobs for Python 3.11 and 3.12 are

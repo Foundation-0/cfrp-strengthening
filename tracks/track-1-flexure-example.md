@@ -40,6 +40,13 @@ FRP system, one ply of fabric:
 - Environmental factor CE = 0.85, as used in the example. Design values:
   ffu = 108.8 ksi, efu = 0.0077.
 
+Derived, not printed as inputs: ffu and efu are the reported ffu* and
+efu* multiplied by CE, and ebi is itself derived from the dead-load
+moment on the cracked section. The example prints all three ready-made,
+and the checker takes them as inputs rather than deriving them.
+Matching ffu is one of the ten matched values, but it shows only that
+the multiplication was done right.
+
 ## Results printed in the example
 
 KNOWN, from the example. A checker earns VERIFIED only by matching these
@@ -57,7 +64,10 @@ from the inputs alone.
 - Service checks: cracked section factor k = 0.3709, so kd = 8.90 in.
   Steel stress under service loads fs,s = 46.1 ksi, limit 0.80 fy = 48 ksi,
   pass. FRP stress under service loads ff,s = 8.6 ksi, limit 0.55 ffu =
-  60 ksi, pass.
+  59.8 ksi, printed as 60 ksi, pass. The 0.55 factor is the creep-rupture
+  limit, ACI 440.2R-17 Section 10.2.9. It belongs on the sustained part of
+  the service moment. The example gives no sustained split, so it is
+  applied at the full service moment here.
 
 KNOWN, from ACI's published material on ACI 562-16 and ACI 562-13 and
 from ACI 440.2R-17, not from the example (see NOTICE): the example's
