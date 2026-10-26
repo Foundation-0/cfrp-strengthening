@@ -4,7 +4,7 @@ Each track is one worked example, one checker, and one set of checks.
 
 | Track | What it covers | Status |
 |---|---|---|
-| [Track 1](track-1-flexure-example.md) | Flexure checks for one concrete beam with carbon fiber fabric, ACI 440.2R-17 Chapter 10 | Result recorded in results/track-1-flexure/. Publisher confirmation of the strengthened strength stays open. |
+| [Track 1](track-1-flexure-example.md) | Flexure checks for one concrete beam with carbon fiber fabric, ACI 440.2R-17 Chapter 10 | Result recorded in results/track-1-flexure/. Publisher confirmation of the strengthened strength stays open. Service concrete stress (Section 10.2.8) is not checked, and by hand the beam fails it, about 3.38 ksi against 0.60 f'c = 2.40 ksi; issue #4 item 1. |
 
 Later tracks, in the order Shahid set:
 

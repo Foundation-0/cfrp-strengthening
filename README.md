@@ -7,12 +7,12 @@ Status: Active. One result is recorded, for Track 1.
 ## What this is
 
 - One beam at a time. The first track is a reinforced concrete beam strengthened in bending with one carbon fiber fabric system.
-- Every number comes from a stated input file. A small Python program will run each check and print the value, the limit, and pass or fail.
+- Every number comes from a stated input file. A small Python program, src/flexure440.py, runs the checks it implements and prints, for each, the value, the limit, and pass or fail. Run it with `python3 src/flexure440.py tracks/track-1/input.json`. Its known gaps and defects are listed in docs/audit.md.
 - Every claim carries a label: PROVEN, VERIFIED, KNOWN, or CONJECTURE. The labels are defined in CONTRIBUTING.md.
 
 ## What is known and what is ours
 
-KNOWN, and not ours: the design method. It comes from ACI 440.2R, written by ACI Committee 440. Section numbers in this repo follow the 2017 edition, ACI 440.2R-17. The concrete stress block rules come from ACI 318.
+KNOWN, and not ours: the design method. It comes from ACI 440.2R, written by ACI Committee 440. Section numbers in this repo follow the 2017 edition, ACI 440.2R-17, which ACI PRC-440.2-23 has since superseded; see NOTICE. For the existing, unstrengthened section the checker uses the ACI 318 Whitney stress block. For the strengthened section it uses the stress block factors of ACI 440.2R-17 Chapter 10.
 
 Ours: the code, the tests, the plain language notes, and any errors in them. This repo does not copy the text or the figures of the ACI guide. It cites the guide and uses its method.
 
