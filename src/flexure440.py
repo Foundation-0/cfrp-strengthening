@@ -54,7 +54,7 @@ Scope limits, stated plainly:
   service moment always describe the same structure.
 - One FRP system bonded to the soffit.
 - Dead and live load only, no snow.
-- No shear, no anchorage design, no deflection, no fire design.
+- No shear, no anchorage design, no deflection, no crack width, no fire design.
   This does not replace the full ACI guide or the engineer of record.
 """
 

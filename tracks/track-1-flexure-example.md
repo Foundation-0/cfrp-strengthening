@@ -84,7 +84,7 @@ from the inputs alone.
 ## Checker
 
 src/flexure440.py, standard library only.
-sha256: 8c9fdaeb7d65d4d11182762c5f269e4bd52dacba4876caf546feb0a70ba5b706
+sha256: 540a848908c92dc08a2bc2553518146b836772a22f85a6f24908f1483b363639
 
 Run it:
 
