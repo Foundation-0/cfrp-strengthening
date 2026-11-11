@@ -5,8 +5,10 @@
         }
     ],
     "title": "cfrp-strengthening",
-    "description": "<p>This repository turns the ACI 440.2R design checks for externally bonded FRP strengthening into small public calculations that anyone can re-run from the inputs alone.</p><p>Status: active. One recorded result, labelled VERIFIED for ten printed quantities, is that the checker reproduces the Simpson Strong-Tie worked example. The strengthened design strength, 481.7 kip-ft against a demand of 457.8 kip-ft, is checker output, and the result does not claim serviceability.</p><p>Directed by Shahid Arifuddin</p><p>Researched and verified by different model families across Gemini, Claude, Grok, OpenAI, and Muse</p>",
+    "description": "<p>This repository turns the ACI 440.2R design checks for externally bonded FRP strengthening into small public calculations that anyone can re-run from the inputs alone.</p><p>Status: active. One recorded result, labelled VERIFIED for ten printed quantities, is that the checker reproduces the Simpson Strong-Tie worked example. The strengthened design strength, 481.7 kip-ft against a demand of 457.8 kip-ft, is checker output, and the result does not claim serviceability.</p><p>Code in this repository is under the MIT Licence. Text, notes, and site content in this repository are under the Creative Commons Attribution 4.0 International Licence (CC BY 4.0).</p><p>ACI 440.2R-17, ACI 318-14, and ACI 562-16 are copyrighted by ACI. The Simpson Strong-Tie worked example is copyrighted by Simpson Strong-Tie. We do not copy their text, tables, figures, or layout into this archive. Cited, not copied.</p><p>Directed by Shahid Arifuddin</p><p>Researched and verified by different model families across Gemini, Claude, Grok, OpenAI, and Muse</p>",
     "upload_type": "software",
+    "license": "MIT",
+    "access_right": "open",
     "keywords": [
         "aci-440",
         "carbon-fiber",
