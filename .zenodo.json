@@ -1,0 +1,28 @@
+{
+    "creators": [
+        {
+            "name": "Arifuddin, Shahid"
+        }
+    ],
+    "title": "cfrp-strengthening",
+    "description": "<p>This repository turns the ACI 440.2R design checks for externally bonded FRP strengthening into small public calculations that anyone can re-run from the inputs alone.</p><p>Status: active. One recorded result, labelled VERIFIED for ten printed quantities, is that the checker reproduces the Simpson Strong-Tie worked example. The strengthened design strength, 481.7 kip-ft against a demand of 457.8 kip-ft, is checker output, and the result does not claim serviceability.</p><p>Directed by Shahid Arifuddin</p><p>Researched and verified by different model families across Gemini, Claude, Grok, OpenAI, and Muse</p>",
+    "upload_type": "software",
+    "keywords": [
+        "aci-440",
+        "carbon-fiber",
+        "cfrp",
+        "cfrp-strengthening",
+        "civil-engineering",
+        "concrete",
+        "foundation-0",
+        "structural-engineering"
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://github.com/Foundation-0/cfrp-strengthening",
+            "relation": "isSupplementTo",
+            "scheme": "url",
+            "resource_type": "software"
+        }
+    ]
+}
